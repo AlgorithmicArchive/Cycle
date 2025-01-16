@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { container } from "../../assets/styles";
 import { getLatestCycle, getUserDetails } from "../../api";
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import FloatingLabelBox from "../../components/Common/FloatingLabelBox";
 import { useForm } from "react-hook-form";
 import DatePicker from "../../components/Common/DatePicker";
@@ -31,6 +31,7 @@ export default function HomePage() {
     return monthAbbreviations[monthNumber - 1]; // Subtract 1 to account for zero-based index
   }
   const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [cycleData, setCycleData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +39,20 @@ export default function HomePage() {
       const cycledata = await getLatestCycle();
       setUserDetails(userdata);
       setCycleData(cycledata);
+      setLoading(false);
       console.log(userdata, cycledata);
     };
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div style={container}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
   return (
     <div style={container}>
       <Box
@@ -49,10 +60,14 @@ export default function HomePage() {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", lg: "row" },
-          width: { xs: "100%", lg: "50%" },
+          width: "100%", // Ensure full-width scaling
           justifyContent: "center",
           alignItems: "center",
           gap: { xs: 2, lg: 10 },
+          height: { xs: "80vh", lg: "100vh" }, // Handle height dynamically for smaller screens
+          overflowY: { xs: "auto", lg: "auto" }, // Enable scrolling only when content overflows
+          padding: { xs: 2, lg: 4 }, // Add padding for better spacing
+          boxSizing: "border-box", // Ensure padding is included in dimensions
         }}
       >
         {cycleData && cycleData != null ? (
@@ -64,6 +79,7 @@ export default function HomePage() {
               flexDirection: "column",
               padding: 2,
               borderRadius: 5,
+              marginTop: { xs: "15vh", lg: "0" },
             }}
           >
             <Typography variant="h5" sx={{ marginBottom: 3 }}>

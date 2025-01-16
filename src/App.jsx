@@ -13,9 +13,19 @@ import ShowRecords from "./pages/users/ShowRecords";
 function App() {
   return (
     <AuthProvider>
+      {/* Navigation should be outside Routes */}
+      {/* <Navigation /> */}
       <Routes>
-        {/* Common Navigation and Layout */}
-        <Route path="/" element={<BottomNav />}>
+        {/* Common Layout */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Navigation />
+              <BottomNav />
+            </>
+          }
+        >
           {/* Public Routes */}
           <Route index element={<HomePage />} />
           <Route path="login" element={<LoginScreen />} />

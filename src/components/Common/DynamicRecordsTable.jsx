@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
 import axios from "axios";
+import { container } from "../../assets/styles";
+import { CircularProgress } from "@mui/material";
 
 const DynamicRecordsTable = () => {
   const [records, setRecords] = useState([]);
@@ -48,7 +50,18 @@ const DynamicRecordsTable = () => {
     }));
   }, [displayFields]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (

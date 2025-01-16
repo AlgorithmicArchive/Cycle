@@ -1,15 +1,31 @@
-import { Outlet } from "react-router-dom";
-
+import { Box, Typography } from "@mui/material";
 export const Navigation = () => {
   return (
     <>
-      <div
-        style={{ backgroundColor: "#1E1E2A", color: "#fff" }}
-        className="flex items-center justify-center p-5"
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100%",
+          backgroundColor: "#1E1E2A",
+          padding: "10px 0",
+          display: "flex",
+          justifyContent: "space-around",
+          zIndex: 1000,
+        }}
       >
-        <p className="text-4xl">Cycle</p>
-      </div>
-      <Outlet />
+        <Typography
+          sx={{
+            color: "#fff",
+            fontSize: { xs: 24, lg: 36 },
+            fontWeight: "bold",
+          }}
+        >
+          Cycle
+        </Typography>
+      </Box>
     </>
   );
 };
